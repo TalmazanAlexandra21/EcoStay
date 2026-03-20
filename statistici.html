@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+    <meta charset="UTF-8">
+    <title>Statistici - EcoStay Admin</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 25px;
+            margin-bottom: 40px;
+        }
+
+        .stat-card {
+            background: white;
+            border-radius: 12px;
+            padding: 30px 20px;
+            text-align: center;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            transition: 0.3s;
+            border-top: 5px solid var(--primary);
+        }
+
+        .stat-card:hover { transform: translateY(-5px); }
+
+        .stat-card .icon { font-size: 2.5rem; margin-bottom: 10px; }
+
+        .stat-card h3 {
+            color: var(--primary);
+            font-size: 1rem;
+            font-weight: 500;
+            margin-bottom: 10px;
+        }
+
+        .stat-card .numar {
+            font-size: 3rem;
+            font-weight: 700;
+            color: var(--dark);
+        }
+
+        .sectiune-titlu {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: var(--dark);
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid var(--light);
+        }
+
+        .activitate-lista {
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+
+        .activitate-item {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            padding: 15px 20px;
+            border-bottom: 1px solid var(--accent);
+            transition: background 0.2s;
+        }
+
+        .activitate-item:hover { background: var(--accent); }
+        .activitate-item:last-child { border-bottom: none; }
+
+        .activitate-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: var(--accent);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            flex-shrink: 0;
+        }
+
+        .activitate-text { flex: 1; }
+        .activitate-text strong { display: block; color: var(--dark); font-size: 0.95rem; }
+        .activitate-text span { color: #888; font-size: 0.82rem; }
+
+        .badge {
+            background: var(--primary);
+            color: white;
+            padding: 3px 10px;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 500;
+        }
+
+        .rata-card {
+            background: white;
+            border-radius: 12px;
+            padding: 25px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            margin-bottom: 40px;
+        }
+
+        .bara-container { margin-top: 15px; }
+
+        .bara-row {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 12px;
+        }
+
+        .bara-label { width: 100px; font-size: 0.85rem; color: var(--dark); font-weight: 500; }
+
+        .bara-bg {
+            flex: 1;
+            background: var(--accent);
+            border-radius: 20px;
+            height: 12px;
+            overflow: hidden;
+        }
+
+        .bara-fill {
+            height: 100%;
+            background: var(--primary);
+            border-radius: 20px;
+            transition: width 1s ease;
+        }
+
+        .bara-val { font-size: 0.85rem; color: #888; width: 30px; text-align: right; }
+
+        .btn-logout {
+            background: transparent;
+            color: white;
+            border: 2px solid white;
+            padding: 8px 20px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 500;
+            font-family: 'Poppins', sans-serif;
+            transition: 0.3s;
+        }
+
+        .btn-logout:hover { background: white; color: var(--primary); }
+
+        .page-title {
+            font-size: 1.8rem;
+            font-weight: 600;
+            color: var(--dark);
+            margin-bottom: 8px;
+        }
+
+        .page-subtitle {
+            color: #888;
+            font-size: 0.9rem;
+            margin-bottom: 35px;
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <a href="index.html" class="logo">🌲 EcoStay</a>
+        <button class="btn-logout" onclick="logout()">🚪 Deconectare</button>
+    </nav>
+
+    <div class="container">
+        <p class="page-title">📊 Panou Administrator</p>
+        <p class="page-subtitle">Bine ai venit! Iată o privire de ansamblu asupra platformei.</p>
+
+        <!-- Carduri statistici -->
+        <div class="stats-grid">
+            <div class="stat-card">
+                <div class="icon">🏠</div>
+                <h3>Total Cabane</h3>
+                <div class="numar" id="totalCabane">...</div>
+            </div>
+            <div class="stat-card">
+                <div class="icon">📅</div>
+                <h3>Total Rezervări</h3>
+                <div class="numar" id="totalRezervari">...</div>
+            </div>
+            <div class="stat-card">
+                <div class="icon">⭐</div>
+                <h3>Total Recenzii</h3>
+                <div class="numar" id="totalRecenzii">...</div>
+            </div>
+            <div class="stat-card">
+                <div class="icon">📈</div>
+                <h3>Medie Recenzii/Cabană</h3>
+                <div class="numar" id="medieRecenzii">...</div>
+            </div>
+        </div>
+
+        <!-- Bare de progres -->
+        <div class="rata-card">
+            <p class="sectiune-titlu">📉 Distribuție platformă</p>
+            <div class="bara-container">
+                <div class="bara-row">
+                    <span class="bara-label">Cabane</span>
+                    <div class="bara-bg">
+                        <div class="bara-fill" id="baraCabane" style="width:0%"></div>
+                    </div>
+                    <span class="bara-val" id="baraCabaneVal">0</span>
+                </div>
+                <div class="bara-row">
+                    <span class="bara-label">Rezervări</span>
+                    <div class="bara-bg">
+                        <div class="bara-fill" id="baraRezervari" style="width:0%"></div>
+                    </div>
+                    <span class="bara-val" id="baraRezervariVal">0</span>
+                </div>
+                <div class="bara-row">
+                    <span class="bara-label">Recenzii</span>
+                    <div class="bara-bg">
+                        <div class="bara-fill" id="baraRecenzii" style="width:0%"></div>
+                    </div>
+                    <span class="bara-val" id="baraRecenziiVal">0</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Activitate recentă -->
+        <p class="sectiune-titlu">🕒 Activitate Recentă</p>
+        <div class="activitate-lista">
+            <div class="activitate-item">
+                <div class="activitate-icon">🏠</div>
+                <div class="activitate-text">
+                    <strong>Cabane înregistrate în sistem</strong>
+                    <span>Total cabane disponibile pe platformă</span>
+                </div>
+                <span class="badge" id="badgeCabane">...</span>
+            </div>
+            <div class="activitate-item">
+                <div class="activitate-icon">📅</div>
+                <div class="activitate-text">
+                    <strong>Rezervări procesate</strong>
+                    <span>Total rezervări efectuate de utilizatori</span>
+                </div>
+                <span class="badge" id="badgeRezervari">...</span>
+            </div>
+            <div class="activitate-item">
+                <div class="activitate-icon">⭐</div>
+                <div class="activitate-text">
+                    <strong>Recenzii primite</strong>
+                    <span>Feedback-uri lăsate de clienți</span>
+                </div>
+                <span class="badge" id="badgeRecenzii">...</span>
+            </div>
+        </div>
+    </div>
+
+    <footer>© 2026 EcoStay Moldova</footer>
+
+    <script>
+        if (sessionStorage.getItem('isAdmin') !== 'true') {
+            window.location.href = 'login.html';
+        }
+
+        async function loadStatistici() {
+            try {
+                const res = await fetch('http://localhost:3000/admin/statistici');
+                const data = await res.json();
+
+                const { totalCabane, totalRezervari, totalRecenzii } = data;
+                const medie = totalCabane > 0
+                    ? (totalRecenzii / totalCabane).toFixed(1)
+                    : '0';
+
+                // Carduri
+                document.getElementById('totalCabane').textContent = totalCabane;
+                document.getElementById('totalRezervari').textContent = totalRezervari;
+                document.getElementById('totalRecenzii').textContent = totalRecenzii;
+                document.getElementById('medieRecenzii').textContent = medie;
+
+                // Badge-uri
+                document.getElementById('badgeCabane').textContent = totalCabane;
+                document.getElementById('badgeRezervari').textContent = totalRezervari;
+                document.getElementById('badgeRecenzii').textContent = totalRecenzii;
+
+                // Bare progres
+                const maxVal = Math.max(totalCabane, totalRezervari, totalRecenzii, 1);
+                document.getElementById('baraCabane').style.width = (totalCabane / maxVal * 100) + '%';
+                document.getElementById('baraRezervari').style.width = (totalRezervari / maxVal * 100) + '%';
+                document.getElementById('baraRecenzii').style.width = (totalRecenzii / maxVal * 100) + '%';
+                document.getElementById('baraCabaneVal').textContent = totalCabane;
+                document.getElementById('baraRezervariVal').textContent = totalRezervari;
+                document.getElementById('baraRecenziiVal').textContent = totalRecenzii;
+
+            } catch (err) {
+                alert('Eroare la încărcarea statisticilor!');
+            }
+        }
+
+        function logout() {
+            sessionStorage.removeItem('isAdmin');
+            window.location.href = 'login.html';
+        }
+
+        loadStatistici();
+    </script>
+</body>
+</html>

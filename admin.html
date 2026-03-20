@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+    <meta charset="UTF-8">
+    <title>Admin - EcoStay</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div id="login-section" class="container">
+        <div class="card" style="max-width: 400px; margin: 100px auto;">
+            <h2>Login Administrator</h2>
+            <form id="loginForm">
+                <input type="text" id="user" placeholder="Utilizator" required>
+                <input type="password" id="pass" placeholder="Parolă" required>
+                <button type="submit" class="btn-submit">Intră</button>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        // În interiorul <script> din admin.html
+document.getElementById('loginForm').onsubmit = async (e) => {
+    e.preventDefault();
+    const user = document.getElementById('user').value;
+    const pass = document.getElementById('pass').value;
+
+    try {
+        const res = await fetch('http://localhost:3000/admin/login', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ username: user, password: pass })
+        });
+
+        if (res.ok) {
+            sessionStorage.setItem('isAdmin', 'true');
+            window.location.href = 'statistici.html'; 
+        } else {
+            alert('Date incorecte!');
+        }
+    } catch (err) {
+        alert('Eroare de conexiune cu serverul!');
+    }
+};
+    </script>
+</body>
+</html>

@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+    <meta charset="UTF-8">
+    <title>Login - EcoStay</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <nav>
+        <a href="index.html" class="logo">🌲 EcoStay</a>
+    </nav>
+    <div class="container" style="display:flex; justify-content:center;">
+        <div class="card" style="width:300px;">
+            <h2>Login Admin</h2>
+            <input type="text" id="username" placeholder="Utilizator">
+            <input type="password" id="password" placeholder="Parolă">
+            <button class="btn-submit" onclick="login()">Intră</button>
+        </div>
+    </div>
+    <footer>© 2026 EcoStay Moldova</footer>
+   <script>
+    async function login() {
+        const username = document.getElementById('username').value;
+        const password = document.getElementById('password').value;
+
+        try {
+            const res = await fetch('http://localhost:3000/admin/login', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ username, password })
+            });
+
+            if (res.ok) {
+                sessionStorage.setItem('isAdmin', 'true');
+                window.location.href = 'statistici.html';
+            } else {
+                alert('Date incorecte!');
+            }
+        } catch (err) {
+            alert('Eroare de conexiune cu serverul!');
+        }
+    }
+</script>
+</body>
+</html>

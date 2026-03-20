@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+    <meta charset="UTF-8">
+    <title>EcoStay - Destinații</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <nav>
+        <a href="index.html" class="logo">🌲 EcoStay</a>
+        <div class="nav-links">
+            <a href="index.html">Home</a>
+            <a href="destinatii.html">Destinații</a>
+            <a href="recenzii.html">Recenzii</a>
+            <a href="contact.html">Contact</a>
+        </div>
+    </nav>
+
+<div class="destinatii-grid" id="cabane-container"></div>
+<footer>© 2026 EcoStay Moldova</footer>
+
+<script>
+    async function loadCabane() {
+        const res = await fetch('http://localhost:3000/cabane');
+        const data = await res.json();
+        document.getElementById('cabane-container').innerHTML = data.map(c => `
+            <div class="card">
+                <img src="${c.imagineUrl}" alt="${c.nume}">
+                <div class="card-body">
+                    <h3>${c.nume}</h3>
+                    <p>${c.pret} MDL</p>
+                    <a href="rezervare.html" class="btn-rezerva">Rezervă</a>
+                </div>
+            </div>
+        `).join('');
+    }
+    loadCabane();
+</script>
+</body>
+</html>

@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+    <meta charset="UTF-8">
+    <title>Rezervare - EcoStay</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        .form-rezervare {
+            max-width: 500px;
+            margin: 40px auto;
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+        .form-group { margin-bottom: 15px; }
+        .form-group label { display: block; margin-bottom: 5px; font-weight: 600; }
+        input, select { width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 6px; }
+        .btn-trimite { 
+            width: 100%; background: #2d5a27; color: white; padding: 12px; 
+            border: none; border-radius: 6px; cursor: pointer; font-size: 16px; margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+
+    <nav>
+        <div class="logo">🌲 EcoStay</div>
+        <ul class="nav-links">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="destinatii.html">Destinații</a></li>
+        </ul>
+    </nav>
+
+    <div class="container">
+        <div class="form-rezervare">
+            <h2>Rezervă Cabana</h2>
+            <form id="rezervareForm">
+                <div class="form-group">
+                    <label>Nume</label>
+                    <input type="text" id="nume" required>
+                </div>
+                <div class="form-group">
+                    <label>Prenume</label>
+                    <input type="text" id="prenume" required>
+                </div>
+                <div class="form-group">
+                    <label>Nr. Telefon</label>
+                    <input type="tel" id="telefon" required>
+                </div>
+                <div class="form-group">
+                    <label>Email</label>
+                    <input type="email" id="email" required>
+                </div>
+                <div class="form-group">
+                    <label>Cabana</label>
+                    <select id="cabana">
+                        <option value="1">Cabana Forest View</option>
+                        <option value="2">Eco Glass House</option>
+                        <option value="3">Tiny House Retreat</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Perioada (Data sosirii)</label>
+                    <input type="date" id="dataSosire" required>
+                </div>
+                <button type="submit" class="btn-trimite">Trimite Rezervarea</button>
+            </form>
+        </div>
+    </div>
+
+    <footer>© 2026 EcoStay Moldova</footer>
+
+    <script>
+        document.getElementById('rezervareForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+
+            const data = {
+                nume: document.getElementById('nume').value,
+                prenume: document.getElementById('prenume').value,
+                telefon: document.getElementById('telefon').value,
+                email: document.getElementById('email').value,
+                cabana: document.getElementById('cabana').value,
+                dataSosire: document.getElementById('dataSosire').value,
+                numeClient: document.getElementById('nume').value + ' ' + document.getElementById('prenume').value,
+                cabanaId: parseInt(document.getElementById('cabana').value),
+                dataStart: document.getElementById('dataSosire').value,
+                dataFinal: new Date(new Date(document.getElementById('dataSosire').value).getTime() + 2 * 24 * 60 * 60 * 1000).toISOString().split('T')[0]
+            };
+
+            try {
+                const res = await fetch('http://localhost:3000/rezervari', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(data)
+                });
+
+                const result = await res.json();
+
+                alert("Rezervarea a fost trimisă cu succes!");
+                document.getElementById('rezervareForm').reset();
+
+            } catch (err) {
+                console.error("Eroare la trimiterea rezervării:", err);
+                alert("A apărut o eroare. Încearcă din nou.");
+            }
+        });
+    </script>
+</body>
+</html>

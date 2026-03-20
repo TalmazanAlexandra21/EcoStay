@@ -1,0 +1,240 @@
+/* 1. Importuri și Variabile */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap');
+
+:root {
+    --primary: #2d5a27;
+    --dark: #1a3317;
+    --light: #a8d5ba;
+    --accent: #f0f4f0;
+    --white: #ffffff;
+    --bg: #f9fbf9;
+}
+
+/* 2. Resetare Globală */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+}
+
+/* 3. Layout (Sticky Footer) */
+body {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    background-color: var(--bg);
+}
+
+.container {
+    flex: 1; /* Ocupă tot spațiul rămas între nav și footer */
+    width: 100%;
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 40px 20px;
+}
+
+/* 4. Navigație */
+nav {
+    background: var(--primary);
+    padding: 1rem 5%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+}
+
+.logo { color: white; font-size: 1.5rem; font-weight: bold; text-decoration: none; }
+.nav-links { display: flex; list-style: none; gap: 20px; }
+.nav-links a { color: white; text-decoration: none; font-weight: 500; }
+.nav-links a:hover { color: var(--light); }
+
+/* 5. Hero Section (Home) */
+.hero {
+    height: 60vh;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    color: white;
+    background-size: cover;
+    background-position: center;
+    background-blend-mode: overlay;
+    background-color: rgba(0,0,0,0.4);
+}
+
+.hero h1 { font-size: 3rem; margin-bottom: 10px; }
+
+/* 6. Grid Destinații */
+.destinatii-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 25px;
+}
+
+.card {
+    background: white;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+    transition: 0.3s;
+}
+
+.card:hover { transform: translateY(-5px); }
+.card img { width: 100%; height: 200px; object-fit: cover; }
+.card-body { padding: 20px; }
+
+/* 7. Elemente Formular și Recenzii */
+.btn-rezerva { 
+    background: var(--primary); 
+    color: white; 
+    padding: 10px 20px; 
+    border-radius: 5px; 
+    text-decoration: none; 
+    display: inline-block; 
+    margin-top: 15px; 
+}
+
+.review-item {
+    background: white;
+    padding: 20px;
+    border-radius: 10px;
+    margin-bottom: 15px;
+    border-left: 5px solid var(--primary);
+}
+
+/* 8. Footer */
+footer {
+    background: var(--dark);
+    color: white;
+    text-align: center;
+    padding: 25px;
+    margin-top: auto; /* Împinge footer-ul mereu la baza paginii */
+}
+/* Stil pentru pagina de recenzii */
+.container-recenzii {
+    max-width: 600px; /* Formularul nu va fi prea lat */
+    margin: 50px auto;
+    padding: 20px;
+}
+
+#lista-recenzii {
+    margin-top: 30px;
+}
+
+/* Asigură-te că footer-ul stă jos */
+body {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+footer {
+    margin-top: auto;
+}
+/* Stilizarea secțiunii Hero */
+.hero {
+    height: calc(100vh - 140px); /* 100% din înălțimea vizibilă minus nav și footer */
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center; /* Centrare pe verticală */
+    align-items: center;     /* Centrare pe orizontală */
+    text-align: center;
+    background-image: url('calea_catre_imaginea_ta.jpg');
+    background-size: cover;
+    background-position: center;
+    background-blend-mode: overlay;
+    background-color: rgba(0, 0, 0, 0.4); /* Întunecă ușor poza pentru lizibilitate */
+    color: white;
+}
+/* Stilul butonului "Rezervă Acum" */
+.btn-rezerva {
+    background-color: var(--primary); /* Folosește verdele definit în :root */
+    color: var(--white);
+    padding: 12px 30px;
+    border: none;
+    border-radius: 8px; /* Colțuri rotunjite */
+    font-size: 1.1rem;
+    font-weight: 500;
+    text-decoration: none;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    display: inline-block;
+    margin-top: 20px;
+}
+
+/* Efectul de hover (când treci cu mouse-ul peste el) */
+.btn-rezerva:hover {
+    background-color: var(--dark); /* Se întunecă ușor la hover */
+    transform: translateY(-2px);    /* Ridicare ușoară */
+}
+/* Containerul general pentru pagina de recenzii */
+.recenzii-container {
+    max-width: 600px;
+    margin: 40px auto;
+    padding: 20px;
+    background: #ffffff;
+    border-radius: 12px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+}
+
+/* Stil pentru formularul de recenzii */
+#form-recenzie {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+#form-recenzie input, 
+#form-recenzie textarea {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    font-family: 'Poppins', sans-serif;
+}
+
+#form-recenzie button {
+    background: #2d5a27;
+    color: white;
+    padding: 12px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: 600;
+}
+input {
+    position: relative;
+    z-index: 100; /* Asigură-te că input-ul este deasupra tuturor elementelor */
+    pointer-events: auto !important; /* Forțează activarea click-ului */
+    cursor: text;
+}
+.container {
+    pointer-events: auto; /* Asigură-te că nu e pe none */
+}
+/* Stil pentru secțiunea de recenzii */
+.recenzii-container {
+    max-width: 600px;
+    margin: 40px auto;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    padding: 20px;
+}
+
+input, textarea {
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+button {
+    background-color: #2d5a27;
+    color: white;
+    padding: 10px;
+    border: none;
+    cursor: pointer;
+}

@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+    <meta charset="UTF-8">
+    <title>EcoStay - Home</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<nav>
+    <div class="logo">🌲 EcoStay</div>
+    <ul class="nav-links">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="destinatii.html">Destinații</a></li>
+        <li><a href="recenzii.html">Recenzii</a></li>
+        <li><a href="contact.html">Contact</a></li>
+        <li><a href="admin.html">Admin</a></li>
+    </ul>
+</nav>
+
+<header class="hero" style="background-image: url('https://images.unsplash.com/photo-1464822759023-fed622ff2c3b');">
+    <div class="hero-content">
+        <h1>Evadează în Natură</h1>
+        <p>Confort modern în inima pădurii.</p>
+        <a href="rezervare.html" class="btn-rezerva">Rezervă Acum</a>
+    </div>
+</header>
+
+<footer>© 2026 EcoStay Moldova</footer>
+
+<script>
+    async function incarcaCabane() {
+        try {
+            const res = await fetch('http://localhost:3000/cabane');
+            const data = await res.json();
+            
+            const container = document.getElementById('lista-cabane');
+            if (container) {
+                container.innerHTML = data.map(c => `
+                    <div class="card">
+                        <h3>${c.nume}</h3>
+                        <p>Preț: ${c.pret} RON</p>
+                    </div>
+                `).join('');
+            }
+        } catch (err) {
+            console.error("Eroare la încărcarea cabanelor:", err);
+        }
+    }
+    // incarcaCabane(); // Funcția este dezactivată pentru pagina Home
+</script>
+
+</body>
+</html>
